@@ -9,6 +9,6 @@ namespace APIMovies2.DAL.Models
 
         public virtual DateTime CreatedDate { get; set; }
 
-        public virtual DateTime ModifiedDate { get; set; }
+        public virtual DateTime UpdatedDate { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 using APIMovies2.DAL;
-using APIMovies2.Movies.MoviesMapper;
+using APIMovies2.MoviesMapper;
 using APIMovies2.Repository;
 using APIMovies2.Repository.IRepository;
 using APIMovies2.Services;

@@ -11,6 +11,10 @@ namespace APIMovies2.MoviesMapper
         {
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<Category, CategoryCreateDto>().ReverseMap(); 
+
+            CreateMap<Movie, MovieDto>().ReverseMap();
+            CreateMap<Movie, MovieCreateDto>().ReverseMap();
+            CreateMap<Movie, MovieUpdateDto>().ReverseMap();
         }
     }
 

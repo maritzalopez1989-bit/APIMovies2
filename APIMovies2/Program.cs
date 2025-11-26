@@ -12,7 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
 
 // Registrar AutoMapper
-builder.Services.AddAutoMapper(typeof(APIMovies2.MoviesMapper.Mappers));
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<Mappers>());
 
 // Registrar Repositorios
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();

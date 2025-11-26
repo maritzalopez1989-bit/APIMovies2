@@ -1,88 +1,14 @@
-using APIMovies2.DAL;
-using APIMovies2.DAL.Models;
-using APIMovies2.Repository.IRepository;
-using Microsoft.EntityFrameworkCore;
+using APIMovies2.DAL.Models.Dtos;
 
-namespace APIMovies2.Repository
+namespace APIMovies2.Services.IServices
 {
-    public class MovieRepository : IMovieRepository
+    public interface IMovieService
     {
-        private readonly ApplicationDbContext _context;
-
-        public MovieRepository(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<bool> MovieExistsByIdAsync(int id)
-        {
-            return await _context.Movies
-                .AsNoTracking()
-                .AnyAsync(m => m.Id == id);
-        }
-
-        public async Task<bool> MovieExistsByNameAsync(string name)
-        {
-            return await _context.Movies
-                .AsNoTracking()
-                .AnyAsync(m => m.Name == name);
-        }
-
-        public async Task<bool> CreateMovieAsync(Movie movie)
-        {
-            movie.CreatedDate = DateTime.UtcNow;
-
-            _context.Movies.Add(movie);
-            return await SaveAsync();
-        }
-
-        public async Task<bool> DeleteMovieAsync(int id)
-        {
-            var movie = await _context.Movies.FindAsync(id);
-
-            if (movie == null)
-            {
-                return false;
-            }
-
-            _context.Movies.Remove(movie);
-            return await SaveAsync();
-        }
-
-        public async Task<ICollection<Movie>> GetMoviesAsync()
-        {
-            var movies = await _context.Movies
-                .AsNoTracking()
-                .OrderBy(m => m.Name)
-                .ToListAsync();
-
-            return movies;
-        }
-
-        public async Task<Movie> GetMovieAsync(int id)
-        {
-            var movie = await _context.Movies
-                .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.Id == id);
-
-            return movie;
-        }
-
-        public async Task<bool> UpdateMovieAsync(Movie movie)
-        {
-            movie.UpdatedDate = DateTime.UtcNow;
-
-            _context.Movies.Update(movie);
-            return await SaveAsync();
-        }
-
-        #region Private Methods
-
-        private async Task<bool> SaveAsync()
-        {
-            return await _context.SaveChangesAsync() >= 0;
-        }
-
-        #endregion
+        Task<ICollection<MovieDto>> GetMoviesAsync();
+        Task<MovieDto> GetMovieAsync(int id);
+        Task<bool> MovieExistsByIdAsync(int id);
+        Task<MovieDto> CreateMovieAsync(MovieCreateDto movieCreateDto);
+        Task<MovieDto> UpdateMovieAsync(int id, MovieUpdateDto movieUpdateDto);
+        Task<bool> DeleteMovieAsync(int id);
     }
 }
